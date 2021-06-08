@@ -256,14 +256,9 @@ if __name__ == '__main__':
 
     parser.add_argument('--seed', type=int, default=111, help="random seed for initialization")
     parser.add_argument("--batch_size", default=, type=int, help="Batch size for training and evaluation.")
-    parser.add_argument("--max_seq_len", default=50, type=int,
-                        help="The maximum total input sequence length after tokenization.")
-    parser.add_argument('--num_features', type=int, default=48, help="number of MFCC features")
-
-    parser.add_argument('--max_length_text', type=int, default=20, help="max_length_text")
 
     parser.add_argument("--learning_rate", default=, type=float,
-                        help="The initial learning rate for Adam.")  # lr was 5 originally
+                        help="The initial learning rate for Adam.") 
     parser.add_argument("--num_train_epochs", default=100, type=int,
                         help="Total number of training epochs to perform.")
     parser.add_argument('--logging_steps', type=int, default=, help="Log every X updates steps.")
@@ -279,10 +274,9 @@ if __name__ == '__main__':
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    parser.add_argument("--nhead", default=8, type=int, help="nhead.")
-    parser.add_argument("--nlayers", default=6, type=int, help="nlayers.")
+    parser.add_argument("--nhead", default=, type=int, help="nhead.")
+    parser.add_argument("--nlayers", default=, type=int, help="nlayers.")
     parser.add_argument("--d_k", default=64, type=int, help="d_k.")
-    parser.add_argument("--dropout", default=0.1, type=float, help="dropout.")
     parser.add_argument("--d_v", default=64, type=int, help="d_v.")
     parser.add_argument("--d_model", default=512, type=int, help="d_model.")
     parser.add_argument("--d_inner", default=768, type=int, help="d_inner.")
@@ -297,9 +291,9 @@ if __name__ == '__main__':
                         help='alpha3')
 
     # optimizer
-    parser.add_argument('--k', default=0.95, type=float,
+    parser.add_argument('--k', default=, type=float,
                         help='tunable scalar multiply to learning rate')
-    parser.add_argument('--warmup_steps', default=18000, type=int,
+    parser.add_argument('--warmup_steps', default=, type=int,
                         help='warmup steps')
     args = parser.parse_args()
     train(args)
