@@ -105,9 +105,9 @@ def train(args):
     logger.info("Model initialization for training and setting up the training environment")
     num_intents = 31
     args.num_features = 768
-    config_path = './no_unfreezing.cfg'
+    config_path = './no_unfreezing.cfg' ##pretrained ASR model
     config = read_config(config_path)
-    train_dataset, valid_dataset, test_dataset = get_SLU_datasets(config)
+    train_dataset, valid_dataset, test_dataset = get_SLU_datasets(config) ##dataload
 
     model = init_model(config, embedding_size, args.batch_size, hidden_size, args.num_features,
                        num_intents, args.nhead, args.nlayers, args.d_k, args.d_v, args.d_model, args.d_inner)
@@ -143,7 +143,7 @@ def train(args):
         logger.info("Run training for epoch # {}".format(epoch))
         for idx, batch in enumerate(train_dataset.loader):
 
-            x_data, y_data, text = batch  # x2->'input_id'; m2->'attention_mask'
+            x_data, y_data, text = batch  
             batch_size = len(x_data)
 
             output2, intent_loss, intent_acc, student_atts, student_reps, length, score = model(x_data, y_data)
@@ -176,10 +176,10 @@ def train(args):
                 student_att = torch.where(student_att <= -1e2, torch.zeros_like(student_att).to(device),
                                           student_att)
                 teacher_att = torch.where(teacher_att <= -1e2, torch.zeros_like(teacher_att).to(device),
-                                          teacher_att)  # [64,12,25,25][batch_size, num_heads, seq_length, seq_length]
+                                          teacher_att)  # [batch_size, num_heads, seq_length, seq_length]
                 student_att = student_att.reshape(batch_size, args.nhead, length, length)
                 teacher_att = teacher_att.to(device)
-                student_att = torch.mean(student_att, 1, False)
+                student_att = torch.mean(student_att, 1, False) 
                 teacher_att = torch.mean(teacher_att, 1, False)
                 att_loss += loss_mse(student_att, teacher_att)
 
